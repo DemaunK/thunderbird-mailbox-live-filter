@@ -12,7 +12,7 @@ A lightweight Thunderbird add-on that adds a **live filter input directly to the
 - **Instant filtering:** Filters mailboxes as you type (supports multiple space-separated keywords, e.g. `work gmail`).
 - **Subfolder mode (`📁` button):** Optionally search inside all nested subfolders too. Matching parent folders expand automatically and collapse back when cleared.
 - **Keyboard friendly:**
-  - `Alt + Shift + F` — focus the filter bar from anywhere (customizable in Thunderbird's Add-on Shortcuts).
+  - `Ctrl+Shift+E` — focus the filter bar from anywhere (customizable in Thunderbird's Add-on Shortcuts).
   - `Enter` or `↓` — select and jump to the first visible match.
   - `Esc` — clear the search query (press `Esc` again to focus the folder tree).
 - **Native look:** Automatically adapts to Thunderbird Light and Dark themes.
@@ -39,7 +39,7 @@ A lightweight Thunderbird add-on that adds a **live filter input directly to the
 - **Мгновенная фильтрация при наборе:** поддерживает несколько слов через пробел (например, `work gmail`).
 - **Поиск по подпапкам (кнопка `📁`):** при включении ищет не только ящики, но и вложенные папки. Родительские папки с совпадениями раскрываются автоматически и сворачиваются обратно после очистки поиска.
 - **Управление с клавиатуры:**
-  - `Alt + Shift + F` — быстрый переход в строку фильтра из любого места (клавишу можно сменить в настройках дополнений Thunderbird).
+  - `Ctrl+Shift+E` — быстрый переход в строку фильтра из любого места (клавишу можно сменить в настройках дополнений Thunderbird).
   - `Enter` или `↓` — выбрать и открыть первый найденный ящик/папку.
   - `Esc` — очистить фильтр (повторное нажатие переводит фокус в дерево папок).
 - **Поддержка тем:** автоматически подстраивается под светлую и тёмную тему Thunderbird.
