@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Mailbox Live Filter",
+  "version": "1.0.0",
+  "description": "Живой фильтр почтовых ящиков и папок в шапке левой панели.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "mailbox-live-filter@local.addon",
+      "strict_min_version": "115.0"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "commands": {
+    "focus-mailbox-filter": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Перейти к строке фильтра почтовых ящиков"
+    }
+  },
+  "experiment_apis": {
+    "folderFilter": {
+      "schema": "api/folderfilter/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["folderFilter"]],
+        "script": "api/folderfilter/implementation.js"
+      }
+    }
+  }
+}

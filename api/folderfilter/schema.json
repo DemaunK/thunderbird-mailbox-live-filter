@@ -1,0 +1,19 @@
+[
+  {
+    "namespace": "folderFilter",
+    "functions": [
+      {
+        "name": "start",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "focusFilter",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      }
+    ]
+  }
+]
