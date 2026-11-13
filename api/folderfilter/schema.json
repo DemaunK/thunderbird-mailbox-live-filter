@@ -13,6 +13,17 @@
         "type": "function",
         "async": true,
         "parameters": []
+      },
+      {
+        "name": "setShortcut",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "name": "shortcut",
+            "type": "string"
+          }
+        ]
       }
     ]
   }

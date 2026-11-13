@@ -81,8 +81,17 @@ const CSS_TEXT = `
   }
 `;
 
-// Храним ссылки для корректной очистки при выключении аддона
 const windowCleanupMap = new Map();
+let currentShortcut = "Ctrl+Shift+E";
+
+function updateInputHints(input) {
+  const sc = currentShortcut ? ` (${currentShortcut})` : "";
+  input.placeholder = `Фильтр${sc}`;
+  input.title =
+    `Фильтр почтовых ящиков${sc}\n` +
+    `Enter / ↓ — открыть первый найденный\n` +
+    `Esc — очистить или вернуться к списку`;
+}
 
 function attachTo3Pane(about3PaneWin) {
   const doc = about3PaneWin?.document;
@@ -110,10 +119,10 @@ function attachTo3Pane(about3PaneWin) {
   const input = doc.createElementNS(XHTML_NS, "input");
   input.id = "mbfilter-input";
   input.type = "text";
-  input.placeholder = "Фильтр ящиков...";
   input.setAttribute("aria-label", "Фильтр почтовых ящиков");
   input.autocomplete = "off";
   input.spellcheck = false;
+  updateInputHints(input);
 
   const subfolderBtn = doc.createElementNS(XHTML_NS, "button");
   subfolderBtn.id = "mbfilter-subfolders";
@@ -194,7 +203,6 @@ function attachTo3Pane(about3PaneWin) {
   }
 
   function getTopLevelRows() {
-    // Верхнеуровневые строки внутри каждого режима (All Folders, Unified и т.д.)
     return Array.from(
       folderTree.querySelectorAll('li[is="folder-tree-row"]')
     ).filter((li) => !li.parentElement?.closest('li[is="folder-tree-row"]'));
@@ -269,7 +277,6 @@ function attachTo3Pane(about3PaneWin) {
     input.focus();
   });
 
-  // Если Thunderbird обновит дерево (добавится папка, сменится режим), повторяем фильтр
   let debounceTimer = null;
   const observer = new about3PaneWin.MutationObserver(() => {
     if (!input.value.trim()) {
@@ -280,8 +287,7 @@ function attachTo3Pane(about3PaneWin) {
   });
   observer.observe(folderTree, { childList: true, subtree: true });
 
-  // Сохраняем функцию очистки для этого документа
-  const cleanupDoc = () => {
+  about3PaneWin._mbFilterCleanup = () => {
     observer.disconnect();
     about3PaneWin.clearTimeout(debounceTimer);
     restoreExpanded();
@@ -291,8 +297,6 @@ function attachTo3Pane(about3PaneWin) {
     bar.remove();
     style.remove();
   };
-
-  about3PaneWin._mbFilterCleanup = cleanupDoc;
 }
 
 function hookTab(tab, docCleanups) {
@@ -407,6 +411,7 @@ var folderFilter = class extends ExtensionCommon.ExtensionAPI {
       } catch (e) {}
     }
     windowCleanupMap.clear();
+    currentShortcut = "Ctrl+Shift+E";
     this.#started = false;
     Services.obs.notifyObservers(null, "startupcache-invalidate");
   }
@@ -430,6 +435,20 @@ var folderFilter = class extends ExtensionCommon.ExtensionAPI {
           if (input) {
             input.focus();
             input.select();
+          }
+        },
+        async setShortcut(shortcut) {
+          currentShortcut = shortcut || "";
+          for (const win of Services.wm.getEnumerator("mail:3pane")) {
+            for (const tab of win.gTabmail?.tabInfo || []) {
+              const input =
+                tab.chromeBrowser?.contentWindow?.document?.getElementById(
+                  "mbfilter-input"
+                );
+              if (input) {
+                updateInputHints(input);
+              }
+            }
           }
         },
       },

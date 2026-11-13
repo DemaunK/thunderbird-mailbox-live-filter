@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Mailbox Live Filter",
-  "version": "1.0.0",
-  "description": "Живой фильтр почтовых ящиков и папок в шапке левой панели.",
+  "version": "1.0.2",
+  "description": "Живой фильтр почтовых ящиков и папок в шапке левой панели (горячая клавиша: Ctrl+Shift+E).",
   "browser_specific_settings": {
     "gecko": {
       "id": "mailbox-live-filter@local.addon",
@@ -15,7 +15,7 @@
   "commands": {
     "focus-mailbox-filter": {
       "suggested_key": {
-        "default": "Alt+Shift+F"
+        "default": "Ctrl+Shift+E"
       },
       "description": "Перейти к строке фильтра почтовых ящиков"
     }
